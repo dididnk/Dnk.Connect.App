@@ -1,0 +1,51 @@
+# Visual Studio
+.vscode/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+*.sln.iml
+
+# User secrets
+secrets.json
+
+# Publish output
+publish/
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+packages/
+
+# SQL Server files
+*.mdf
+*.ldf
+
+# Local history for Visual Studio
+.localhistory/
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+
+# Environment variables
+.env
