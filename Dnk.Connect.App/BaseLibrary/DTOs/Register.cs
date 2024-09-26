@@ -6,7 +6,7 @@ namespace BaseLibrary.DTOs
 	{
 		[Required]
 		[MinLength(5)]
-		[MaxLength(10)]
+		[MaxLength(100)]
 		public string? Fullname { get; set; }
 
 		[Required]
