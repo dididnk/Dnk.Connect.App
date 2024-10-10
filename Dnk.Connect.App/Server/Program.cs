@@ -6,33 +6,46 @@ using ServerLibrary.Repositories.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Ajout des services au conteneur
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// starting
+// Configuration du DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ??
-		throw new InvalidOperationException("Sorry, your connection is not found !"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ??
+        throw new InvalidOperationException("Sorry, your connection is not found!"));
 });
 
-// jwt token config
+// Configuration JWT
 builder.Services.Configure<JwtSection>(builder.Configuration.GetSection("JwtSection"));
 builder.Services.AddScoped<IUserAccount, UserAccountRepository>();
+
+// Configuration CORS pour autoriser le client Blazor
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazorWasm",
+        policyBuilder => policyBuilder
+            .WithOrigins("http://localhost:5165", "https://localhost:7000")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()); // Transmettre des cookies ou tokens
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuration du pipeline des requêtes HTTP
 if (app.Environment.IsDevelopment())
 {
-	app.UseSwagger();
-	app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
+
+// Appliquer CORS avant les autres middlewares
+app.UseCors("AllowBlazorWasm");
 
 app.UseAuthorization();
 
