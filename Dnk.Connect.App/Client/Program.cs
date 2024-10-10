@@ -11,11 +11,12 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
+builder.Services.AddTransient<CustomHttpHandler>();
 // Configuration du HttpClient pour interagir avec le backend
 builder.Services.AddHttpClient("SystemApiClient", client =>
 {
     client.BaseAddress = new Uri("https://localhost:7247"); // URL du backend
-});
+}).AddHttpMessageHandler<CustomHttpHandler>();
 
 // Ajout des services requis
 builder.Services.AddAuthorizationCore();
