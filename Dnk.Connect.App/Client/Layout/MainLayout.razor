@@ -9,7 +9,7 @@
 
             <AuthorizeView>
                 <Authorized>
-                    <a class="btn btn-none text-danger" onclick="LogOutClicked">Logout</a>
+                    <a class="btn btn-none text-danger" @onclick="LogOutClicked">Logout</a>
                 </Authorized>
                 <NotAuthorized>
                     <a class="btn btn-none" href="identity/account/login">Login</a>
