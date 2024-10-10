@@ -11,6 +11,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Configuration JWT
+builder.Services.Configure<JwtSection>(builder.Configuration.GetSection("JwtSection"));
+builder.Services.AddScoped<IUserAccount, UserAccountRepository>();
+var jwtSection = builder.Configuration.GetSection(nameof(JwtSection)).Get<JwtSection>();
+
 // Configuration du DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -47,6 +52,7 @@ app.UseHttpsRedirection();
 // Appliquer CORS avant les autres middlewares
 app.UseCors("AllowBlazorWasm");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
